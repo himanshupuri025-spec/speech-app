@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VoxPulse AI - Multilingual Speech Studio (Hindi, English & Global)</title>
+  <meta name="description" content="State-of-the-art multilingual text-to-speech studio powered by ElevenLabs. Read entire paragraphs in natural Hindi, English, Spanish, French, and 29+ languages with high fidelity audio.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans, Noto Sans Devanagari, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Top Header -->
+    <header class="header">
+      <div class="brand-section">
+        <div class="brand-logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="22"></line>
+          </svg>
+        </div>
+        <div class="brand-title-wrap">
+          <h1>VoxPulse AI <span class="badge-tag">Multilingual v2</span></h1>
+          <p>Read full paragraphs in Hindi, English & global languages with natural human emotion</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div class="api-status-badge">
+          <div class="status-dot"></div>
+          <span id="api-status-text">ElevenLabs Connected</span>
+        </div>
+        <button id="btn-open-apikey" class="btn-secondary" title="Configure API Key">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span>API Key</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Language Quick-Select Bar -->
+    <nav class="lang-quickbar" id="lang-quickbar" aria-label="Language selection">
+      <!-- Populated dynamically by app.js -->
+    </nav>
+
+    <!-- Main Studio Grid -->
+    <main class="studio-grid">
+      <!-- Left Column: Paragraph Input & Text Operations -->
+      <section class="glass-panel" aria-labelledby="input-panel-heading">
+        <div class="panel-header">
+          <h2 id="input-panel-heading" class="panel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            Paragraph & Article Text
+          </h2>
+          <div class="panel-actions">
+            <button id="btn-paste-text" class="btn-icon-text" title="Paste text from clipboard">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+              </svg>
+              <span>Paste</span>
+            </button>
+            <button id="btn-clear-text" class="btn-icon-text" title="Clear editor content">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Clear</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Sample paragraph presets for current language -->
+        <div class="sample-pills-bar" id="sample-pills-bar">
+          <!-- Populated dynamically by app.js -->
+        </div>
+
+        <!-- Textarea Editor -->
+        <div class="editor-container">
+          <textarea 
+            id="speech-text" 
+            class="speech-textarea" 
+            placeholder="Type or paste any paragraph in Hindi (हिंदी), English, or another language here..."
+            spellcheck="false"
+          ></textarea>
+
+          <div class="editor-footer">
+            <div class="stats-group">
+              <div class="stat-item">
+                <span>Characters:</span>
+                <span id="char-count" class="stat-val">0</span>
+              </div>
+              <div class="stat-item">
+                <span>Words:</span>
+                <span id="word-count" class="stat-val">0</span>
+              </div>
+              <div class="stat-item">
+                <span>Est. Duration:</span>
+                <span id="est-duration" class="stat-val">0m 00s</span>
+              </div>
+            </div>
+            <div style="font-size:0.75rem; color:var(--text-muted);">
+              Supports full multi-sentence paragraphs
+            </div>
+          </div>
+        </div>
+
+        <!-- Action / Synthesis Trigger -->
+        <div class="action-bar">
+          <button id="btn-generate" class="btn-generate">
+            <div class="spinner"></div>
+            <svg class="btn-icon-default" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+            </svg>
+            <span id="btn-generate-text">Read Whole Paragraph</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Right Column: Voice Selection & Settings -->
+      <section class="glass-panel" aria-labelledby="controls-panel-heading">
+        <div class="panel-header">
+          <h2 id="controls-panel-heading" class="panel-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+            Voice & Synthesis Studio
+          </h2>
+        </div>
+
+        <div class="controls-group">
+          <!-- Voice Selection -->
+          <div class="voices-wrapper">
+            <div class="section-sublabel">
+              <span>Choose Voice (15 Verified Premade Voices)</span>
+            </div>
+            <div class="voice-search-box">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted);">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input type="text" id="voice-search" placeholder="Search voice by name or style (e.g. Jessica, George, Narrator)...">
+            </div>
+            <div class="voices-list" id="voices-list">
+              <!-- Populated by app.js -->
+            </div>
+          </div>
+
+          <!-- Model Selection -->
+          <div class="model-select-wrap">
+            <div class="section-sublabel">
+              <span>Synthesis Model</span>
+            </div>
+            <select id="model-select" class="custom-select">
+              <option value="eleven_multilingual_v2" selected>Eleven Multilingual v2 (Best for Hindi, English & 29+ languages)</option>
+              <option value="eleven_turbo_v2_5">Eleven Turbo v2.5 (Fast low-latency synthesis)</option>
+              <option value="eleven_flash_v2_5">Eleven Flash v2.5 (High throughput)</option>
+            </select>
+          </div>
+
+          <!-- Sliders: Stability, Similarity, Style -->
+          <div class="sliders-grid">
+            <div class="slider-card">
+              <div class="slider-header">
+                <span>Stability</span>
+                <span id="val-stability" class="slider-val">50%</span>
+              </div>
+              <input type="range" id="slider-stability" class="range-input" min="0" max="1" step="0.05" value="0.5">
+            </div>
+
+            <div class="slider-card">
+              <div class="slider-header">
+                <span>Clarity / Similarity</span>
+                <span id="val-similarity" class="slider-val">75%</span>
+              </div>
+              <input type="range" id="slider-similarity" class="range-input" min="0" max="1" step="0.05" value="0.75">
+            </div>
+          </div>
+
+          <div class="slider-card">
+            <div class="slider-header">
+              <span>Style Exaggeration</span>
+              <span id="val-style" class="slider-val">0%</span>
+            </div>
+            <input type="range" id="slider-style" class="range-input" min="0" max="1" step="0.05" value="0.0">
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Audio Player & Live Visualizer -->
+    <section class="player-container" id="player-container" aria-label="Audio player and visualizer">
+      <div class="visualizer-wrapper">
+        <canvas id="visualizer-canvas"></canvas>
+        <div class="visualizer-placeholder" id="visualizer-placeholder">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polygon points="10 8 16 12 10 16 10 8"></polygon>
+          </svg>
+          <span>Live audio waveform & spectrum visualizer will appear here during speech playback</span>
+        </div>
+      </div>
+
+      <!-- Scrub Timeline -->
+      <div class="scrub-timeline">
+        <span id="time-current" class="time-display">00:00</span>
+        <input type="range" id="seek-slider" class="range-input seek-slider" min="0" max="100" value="0">
+        <span id="time-total" class="time-display">00:00</span>
+      </div>
+
+      <!-- Controls Row -->
+      <div class="player-controls">
+        <div class="playback-buttons">
+          <button id="btn-rewind" class="btn-control-round" title="Rewind 5 seconds">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="11 19 2 12 11 5"></polyline>
+              <polyline points="22 19 13 12 22 5"></polyline>
+            </svg>
+          </button>
+
+          <button id="btn-play-pause" class="btn-play-main" title="Play / Pause" disabled>
+            <svg id="icon-play" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <svg id="icon-pause" width="22" height="22" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+
+          <button id="btn-forward" class="btn-control-round" title="Forward 5 seconds">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="13 19 22 12 13 5"></polyline>
+              <polyline points="2 19 11 12 2 5"></polyline>
+            </svg>
+          </button>
+
+          <!-- Playback Speed Chips -->
+          <div class="speed-selector" title="Speech playback speed">
+            <button class="speed-chip" data-speed="0.75">0.75x</button>
+            <button class="speed-chip active" data-speed="1.0">1.0x</button>
+            <button class="speed-chip" data-speed="1.25">1.25x</button>
+            <button class="speed-chip" data-speed="1.5">1.5x</button>
+          </div>
+        </div>
+
+        <div class="player-actions-right">
+          <button id="btn-download-speech" class="btn-download-speech" title="Download generated speech MP3" disabled>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            <span>Download MP3</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- History Tray -->
+    <section class="glass-panel history-section" aria-labelledby="history-heading">
+      <div class="panel-header">
+        <h2 id="history-heading" class="panel-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+          Speech History & Recordings
+        </h2>
+        <button id="btn-clear-history" class="btn-icon-text">
+          <span>Clear History</span>
+        </button>
+      </div>
+
+      <div class="history-list" id="history-list">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+  </div>
+
+  <!-- API Key Modal Dialog -->
+  <div class="modal-overlay" id="api-key-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title" class="modal-title">ElevenLabs API Configuration</h3>
+        <button id="btn-close-apikey" class="modal-close" aria-label="Close dialog">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.5;">
+          Your API key is securely stored in your local browser storage and used to communicate directly with the ElevenLabs text-to-speech engine.
+        </p>
+        <div>
+          <label class="input-label" for="apikey-input">API Key (xi-api-key)</label>
+          <input type="text" id="apikey-input" class="text-input-field" placeholder="sk_...">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btn-save-apikey" class="btn-primary">Save & Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Tray -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
